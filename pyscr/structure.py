@@ -6,7 +6,7 @@ class Mapper(dict):
     __getattr__ = dict.__getitem__
 
 
-class DataType(Enum):
+class DataType(str, Enum):
     string = 'string'
     int = 'int'
     bool = 'bool'
@@ -31,6 +31,7 @@ class Index(Mapper):
 class Table(Mapper):
 
     def __init__(self, name, columns, index=False):
-        super(Table, self).__init__(name=str(name), columns=Mapper(), index=None)
+        super(Table, self).__init__(
+            name=str(name), columns=Mapper(), index=None)
         for c in columns:
             self.columns[c.name] = c

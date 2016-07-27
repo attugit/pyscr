@@ -34,10 +34,10 @@ class TestMapper(unittest.TestCase):
 class TestDataType(unittest.TestCase):
 
     def testCanCreateDataTypes(self):
-        self.assertEqual(DataType('string'), DataType.string)
-        self.assertEqual(DataType('int'), DataType.int)
-        self.assertEqual(DataType('bool'), DataType.bool)
-        self.assertEqual(DataType('double'), DataType.double)
+        self.assertEqual('string', DataType.string)
+        self.assertEqual('int', DataType.int)
+        self.assertEqual('bool', DataType.bool)
+        self.assertEqual('double', DataType.double)
 
     def testThrowsWhenWrongArgPassed(self):
         self.assertRaises(ValueError, DataType, 'invalid')
