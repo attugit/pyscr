@@ -33,7 +33,7 @@ class TestDataType(unittest.TestCase):
         self.assertEqual('string', DataType.string)
         self.assertEqual('int', DataType.int)
         self.assertEqual('bool', DataType.bool)
-        self.assertEqual('double', DataType.double)
+        self.assertEqual('float', DataType.float)
 
     def testThrowsWhenWrongArgPassed(self):
         self.assertRaises(ValueError, DataType, 'invalid')

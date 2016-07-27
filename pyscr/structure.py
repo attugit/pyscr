@@ -10,7 +10,7 @@ class DataType(str, Enum):
     string = 'string'
     int = 'int'
     bool = 'bool'
-    double = 'double'
+    float = 'float'
 
 
 class Column(Mapper):
