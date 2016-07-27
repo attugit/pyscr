@@ -1,0 +1,5 @@
+language: python
+python: "3.4"
+
+install: pip install pyparsing
+script: python -m unittest discover -vs ./test
