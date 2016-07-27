@@ -1,8 +1,4 @@
-from pyscr.structure import Mapper
-from pyscr.structure import DataType
-from pyscr.structure import Column
-from pyscr.structure import Index
-from pyscr.structure import Table
+from pyscr import Mapper, DataType, Column, Index, Table
 import unittest
 
 

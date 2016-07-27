@@ -1,16 +1,14 @@
-from pyscr.frontend import FrontEnd
+from pyscr import FrontEnd
 import unittest
 
-class TestParser(unittest.TestCase):
 
+class TestParser(unittest.TestCase):
 
     def setUp(self):
         self.sut = FrontEnd()
 
-
     def tearDown(self):
         pass
-
 
     def testCanParseTableWithoutIndex(self):
         example = """
@@ -20,7 +18,6 @@ class TestParser(unittest.TestCase):
         ctx = self.sut(example)
         self.assertEqual(ctx.table, 'tableName')
         self.assertFalse(ctx.index)
-
 
     def testCanParseTableWithIndex(self):
         example = """
@@ -33,7 +30,6 @@ class TestParser(unittest.TestCase):
         self.assertEqual(ctx.index.name, 'indexName')
         self.assertEqual(len(ctx.index.columns), 1)
         self.assertEqual(ctx.index.columns[0], 'colName')
-
 
     def testCanParseTableWithColumns(self):
         example = """
@@ -48,7 +44,6 @@ class TestParser(unittest.TestCase):
         self.assertEqual(ctx.columns[0].datatype, 'int')
         self.assertEqual(ctx.columns[1].name, 'colB')
         self.assertEqual(ctx.columns[1].datatype, 'string')
-
 
     def testCanParseOptionalColumns(self):
         example = """
@@ -69,7 +64,6 @@ class TestParser(unittest.TestCase):
         self.assertEqual(ctx.columns[2].datatype, 'bool')
         self.assertFalse(ctx.columns[2].is_optional)
 
-
     def testCanParseConstColumns(self):
         example = """
         table tableName
@@ -88,7 +82,6 @@ class TestParser(unittest.TestCase):
         self.assertEqual(ctx.columns[2].name, 'colC')
         self.assertEqual(ctx.columns[2].datatype, 'bool')
         self.assertFalse(ctx.columns[2].is_const)
-
 
     def testCanParseConstAndOptionalColumns(self):
         example = """

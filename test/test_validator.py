@@ -1,5 +1,4 @@
-from pyscr.frontend import Validator
-from pyscr.structure import Mapper
+from pyscr import Validator, Mapper
 import unittest
 
 
