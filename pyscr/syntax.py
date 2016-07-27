@@ -8,11 +8,11 @@ class SyntaxCheckError(Exception):
     def __str__(self): return str(self.message)
 
 
-class NoColumnsProvided(SyntaxCheckError):
+class NonUniqueColumnNames(SyntaxCheckError):
 
-    def __init__(self):
-        super(NoColumnsProvided, self).__init__(
-            'no column definitions provided!')
+    def __init__(self, msg):
+        super(NonUniqueColumnNames, self).__init__(
+            'multiple definitions of %s!' % str(msg))
 
 
 class Validate(object):
@@ -23,8 +23,10 @@ class Validate(object):
 
     @staticmethod
     def getColumns(ctx):
-        if len(ctx.columns) == 0:
-            raise NoColumnsProvided
+        names = tuple(map(lambda x: x.name, ctx.columns))
+        duplicates = [d for d in names if names.count(d) > 1]
+        if duplicates:
+            raise NonUniqueColumnNames(','.join(set(duplicates)))
         return [Column(name=col.name,
                        datatype=col.datatype,
                        is_optional=col.is_optional,

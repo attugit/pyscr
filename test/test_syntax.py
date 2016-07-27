@@ -1,4 +1,4 @@
-from pyscr import Syntax, FrontEnd
+from pyscr import Syntax, FrontEnd, NonUniqueColumnNames
 import unittest
 
 
@@ -8,7 +8,7 @@ class SyntaxTest(unittest.TestCase):
         self.sut = Syntax()
         self.fe = FrontEnd()
 
-    def testCanCreateSyntaxFromParsedContext(self):
+    def testCanCreateSyntaxFromValidParsedContext(self):
         example = """
         table tableName
         column colA int
@@ -31,3 +31,12 @@ class SyntaxTest(unittest.TestCase):
         self.assertEqual(table.columns.colD.datatype, 'float')
         self.assertTrue(table.columns.colD.is_optional)
         self.assertTrue(table.columns.colD.is_const)
+
+    def testThrowsWhenColumnsAreNotUniqe(self):
+        example = """
+        table invalidColumn
+        column colA int
+        column colB string
+        column colA bool
+        """
+        self.assertRaises(NonUniqueColumnNames, self.sut, self.fe(example))
