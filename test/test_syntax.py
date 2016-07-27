@@ -1,4 +1,4 @@
-from pyscr import Syntax, FrontEnd, NonUniqueColumnNames
+from pyscr import Syntax, FrontEnd, NonUniqueColumnNames, InvalidColumnsInIndex
 import unittest
 
 
@@ -40,3 +40,28 @@ class SyntaxTest(unittest.TestCase):
         column colA bool
         """
         self.assertRaises(NonUniqueColumnNames, self.sut, self.fe(example))
+
+    def testCanCreateSyntaxFromValidParsedContextWithIndex(self):
+        example = """
+        table tableName
+        index idx (colD, colB)
+        column colA int
+        column colB string
+        column colC bool
+        column colD float
+        """
+        table = self.sut(self.fe(example))
+        self.assertTrue(table.index)
+        self.assertEqual(table.index.name, 'idx')
+        self.assertEqual(len(table.index.columns), 2)
+        self.assertEqual(table.index.columns[0], 'colD')
+        self.assertEqual(table.index.columns[1], 'colB')
+
+    def testThrowsWhenIndexHaveInvalidColumns(self):
+        example = """
+        table invalidTable
+        index idx (colE, colA)
+        column colA int
+        column colB string
+        """
+        self.assertRaises(InvalidColumnsInIndex, self.sut, self.fe(example))

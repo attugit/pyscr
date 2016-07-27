@@ -25,13 +25,13 @@ class Index(Mapper):
 
     def __init__(self, name, columns):
         super(Index, self).__init__(
-            name=str(name), columns=set([str(c) for c in columns]))
+            name=str(name), columns=tuple([str(c) for c in columns]))
 
 
 class Table(Mapper):
 
-    def __init__(self, name, columns, index=False):
+    def __init__(self, name, columns, index=None):
         super(Table, self).__init__(
-            name=str(name), columns=Mapper(), index=None)
+            name=str(name), columns=Mapper(), index=index)
         for c in columns:
             self.columns[c.name] = c

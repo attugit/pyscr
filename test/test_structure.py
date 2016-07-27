@@ -55,7 +55,7 @@ class TestColumn(unittest.TestCase):
 class TestIndex(unittest.TestCase):
 
     def testCanCreateIndex(self):
-        idx = Index(name='idxName', columns=('colA', 'colB', 'colA'))
+        idx = Index(name='idxName', columns=('colA', 'colB'))
         self.assertEqual(idx.name, 'idxName')
         self.assertEqual(len(idx.columns), 2)
         self.assertTrue('colA' in idx.columns)
