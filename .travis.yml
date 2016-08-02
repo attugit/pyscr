@@ -5,3 +5,4 @@ script: python -m unittest discover -vs ./test
 before_install:
 - openssl aes-256-cbc -K $encrypted_a3c562ec3a5f_key -iv $encrypted_a3c562ec3a5f_iv
   -in .ci/travis.enc -out travis -d
+
