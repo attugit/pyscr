@@ -5,9 +5,11 @@ script: python -m unittest discover -vs ./test
 before_install:
 - mkdir -p ~/.ssh
 - chmod 700 -R ~/.ssh
-- printf "Host github.com\n\tStrictHostKeyChecking=no\n\tIdentityFile ~/.ssh/travis\n" > ~/.ssh/config
+- printf "Host github.com\n\tStrictHostKeyChecking=no\n\tIdentityFile ~/.ssh/travis.key\n" > ~/.ssh/config
 - ls -al ~/.ssh
 - ls -al
-- openssl aes-256-cbc -K $encrypted_a3c562ec3a5f_key -iv $encrypted_a3c562ec3a5f_iv -in travis.enc -out ~\/.ssh/travis -d
+- openssl aes-256-cbc -K $encrypted_a3c562ec3a5f_key -iv $encrypted_a3c562ec3a5f_iv -in travis.enc -out travis.key -d
+- ls -al
+- mv travis.key ~/.ssh
 - ls -al ~/.ssh
 
