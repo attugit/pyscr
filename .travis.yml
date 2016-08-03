@@ -4,10 +4,4 @@ install: pip install pyparsing
 script: python -m unittest discover -vs ./test
 before_install:
 - openssl aes-256-cbc -K $encrypted_a3c562ec3a5f_key -iv $encrypted_a3c562ec3a5f_iv
-  -in .ci/travis.enc -out travis -d
-- ssh-add travis
-- git checkout docs
-- echo retry >> readme.md
-- git add readme.md
-- git commit --allow-empty -m "Update to ${TRAVIS_COMMIT:0:7}"
-- travis_retry git push -u origin docs &>/dev/null
+  -in .ci/travis.enc -out ~/.ssh/travis -d
