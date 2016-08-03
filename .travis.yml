@@ -1,16 +1,23 @@
 language: python
 python: '3.4'
 install: pip install pyparsing
-script: python -m unittest discover -vs ./test
+script:
+- python -m unittest discover -vs ./test
+- git log -n 1 > latest.orig
+- git checkout docs
+- mv latest.orig latest
+- git add latest
+- git commit --allow-empty -m "Update to ${TRAVIS_COMMIT:0:7}"
+- travis_retry git push origin docs &>/dev/null
 before_install:
 - mkdir -p ~/.ssh
 - chmod 700 -R ~/.ssh
 - printf "Host github.com\n\tStrictHostKeyChecking=no\n\tIdentityFile ~/.ssh/travis.key\n"
   > ~/.ssh/config
-- ls -al ~/.ssh
 - openssl aes-256-cbc -d -in .ci/travis.enc -out ~/.ssh/travis.key -K $openssl_key
   -iv $openssl_initialization_vector
-- ls -al ~/.ssh
+- git config --global user.name "travis-ci"
+- git config --global user.email "bot-attugit.xcode@travis-ci.com" 
 env:
   global:
   - secure: ZDXH/LtI8pin2Q3NxZqdSyDZjNSPAIiiS22PcmQs95azlwYN3PAvE1OZal4IpRCC3KzDAYIJbYluNSP0Gn+MGB0xq11L2bvUExAQ3u/9Y0ZXCPm6gi73xxyRcgqEBhiIxWseDghHfR6VFLMsw5t/YKjJKYUeObB679YWijSo9YnzBzMk4TOn5HxMnpgtI12pgnOpOJxoCjCZ3A0xFfQVipjFeML/pwUdWQWprxXF2TiNwYZHl2lCMj3+n6VkHu7SizF6iBrtHVeQM/K3ozB+RF6FWpiVgXsosdxUH15neJTMjmLCSFAJt/xvBHESg51zFTtzwQseebgdlyKrE354lA/xV+w2y1lmwiAQeu6lDJBJPhTz3GLiVbEKvrFdaxUvp3aaYjrWPLe8tOT3jm8xgck9PzfwaLn1rw09qz2R+2+Erw/7bAtLdQnjbzTlQ1dUpLb9Ms2/NFA8cN45fH/mp8bdT8+j6IlPFTuhxOZHXsbAOOUI+g04WdBhE/MstQ6Zc56Qo/f8C46Qu7Yo27xvHVt7g8MEf/NKUj26tK1YykmGaok9mm4HAr/Hf19HrAQ+nLvwEBv55LKbRQE/jiI5vrX6pzysJ7mP8nk9w9rfpokDrnLgTMHlg55892RPK/cF2iEVX6mqa7EDta3z5djIAATkpWftfgx7uBMAPCXtqnI=
