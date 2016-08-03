@@ -5,11 +5,13 @@ script: python -m unittest discover -vs ./test
 before_install:
 - mkdir -p ~/.ssh
 - chmod 700 -R ~/.ssh
-- printf "Host github.com\n\tStrictHostKeyChecking=no\n\tIdentityFile ~/.ssh/travis.key\n" > ~/.ssh/config
+- printf "Host github.com\n\tStrictHostKeyChecking=no\n\tIdentityFile ~/.ssh/travis.key\n"
+  > ~/.ssh/config
 - ls -al ~/.ssh
-- ls -al
-- openssl aes-256-cbc -K $encrypted_a3c562ec3a5f_key -iv $encrypted_a3c562ec3a5f_iv -in travis.enc -out travis.key -d
-- ls -al
-- mv travis.key ~/.ssh
+- openssl aes-256-cbc -d -in .ci/travis.enc -out ~/.ssh/travis.key -K $openssl_key
+  -iv $openssl_initialization_vector
 - ls -al ~/.ssh
-
+env:
+  global:
+  - secure: ZDXH/LtI8pin2Q3NxZqdSyDZjNSPAIiiS22PcmQs95azlwYN3PAvE1OZal4IpRCC3KzDAYIJbYluNSP0Gn+MGB0xq11L2bvUExAQ3u/9Y0ZXCPm6gi73xxyRcgqEBhiIxWseDghHfR6VFLMsw5t/YKjJKYUeObB679YWijSo9YnzBzMk4TOn5HxMnpgtI12pgnOpOJxoCjCZ3A0xFfQVipjFeML/pwUdWQWprxXF2TiNwYZHl2lCMj3+n6VkHu7SizF6iBrtHVeQM/K3ozB+RF6FWpiVgXsosdxUH15neJTMjmLCSFAJt/xvBHESg51zFTtzwQseebgdlyKrE354lA/xV+w2y1lmwiAQeu6lDJBJPhTz3GLiVbEKvrFdaxUvp3aaYjrWPLe8tOT3jm8xgck9PzfwaLn1rw09qz2R+2+Erw/7bAtLdQnjbzTlQ1dUpLb9Ms2/NFA8cN45fH/mp8bdT8+j6IlPFTuhxOZHXsbAOOUI+g04WdBhE/MstQ6Zc56Qo/f8C46Qu7Yo27xvHVt7g8MEf/NKUj26tK1YykmGaok9mm4HAr/Hf19HrAQ+nLvwEBv55LKbRQE/jiI5vrX6pzysJ7mP8nk9w9rfpokDrnLgTMHlg55892RPK/cF2iEVX6mqa7EDta3z5djIAATkpWftfgx7uBMAPCXtqnI=
+  - secure: GDlR54X5SC3jmHGm91HVIXFBiFBZwfPJ2HFGS0upDNZcuaEhjkQ3k3BwNRlrKeDr6uxznh74wD8KdvBPtcIbRyjXmdqYu3RL4KdcxhsVosUoANQB3v809cSnSuyxX1WMG/9sYnVIWIiQJaN/s/HqWyNBWn31gECOL+7K46VjOa1o/c2QjusClc1FgGeHD+9hWg7dm1DIrJJ4oq08C9S+3p2s+/7fbYi2g2e/c67SPWX+vf1YxtK/VrfckycEzRgwpC6p6va6DCGyDI3E5+wzOemQHb0IgiYy5QumlQ2SjaBiTDMaM/oXztkbVdPOkjvS04Lkmtvi/C/wEAUJvvQZc7FBzpQh3UJwDoziQGBgfXaeketrSF/uUfD5SD2bzfisWLi7zQpNynR3avINWaFXhZ4245n2fZfIT9XKVFHKL9YrSan817G/9+qSiJzllEew1AZy+plqS/5eWegPtGoKqWimPwtDKXQzdyTqGZ42e5KdYxzfBZB610lhzwK5jwdmGOwX3jh2XDb6kh50Cytlo6vjw6CRDhDtQF73MFLWecAvz/1ZDiMOBotM+3BqYaDcfLTUg8bFmR62UpTnY9ZHQJh+gN/FF19OUwEeEjblWozrN74Inih+R77OLYih3oqTiTo6HjnTMSrmF10db1aJ0S5lsO2wUaAHHvyAMMoUgcs=
