@@ -8,7 +8,7 @@ script:
 - mv latest.orig latest
 - git add latest
 - git commit --allow-empty -m "Update to ${TRAVIS_COMMIT:0:7}"
-- git push -u github docs &>/dev/null
+- travis_retry git push github HEAD:docs
 before_install:
 - mkdir -p ~/.ssh
 - printf "Host github.com\n\tStrictHostKeyChecking=no\n\tIdentityFile ~/.ssh/travis.key\n"
