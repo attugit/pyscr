@@ -15,7 +15,7 @@ before_install:
   > ~/.ssh/config
 - openssl aes-256-cbc -d -in .ci/travis.enc -out ~/.ssh/travis.key -K $openssl_key
   -iv $openssl_initialization_vector
-- chmod 600 -R ~/.ssh
+- chmod 700 -R ~/.ssh
 - git config --global user.name "travis-ci"
 - git config --global user.email "bot-attugit.xcode@travis-ci.com" 
 - git remote add github git@github.com:attugit/pyscr.git
